@@ -3,6 +3,7 @@ from werkzeug.utils import secure_filename
 
 import pandas as pd
 import plotly.express as px
+import plotly.offline as pyo
 import os
 
 
@@ -20,16 +21,21 @@ def allowed_file(filename):
 
 @app.route('/')
 def upload_page():
+    files = os.listdir(app.config['UPLOAD_FOLDER'])
     flash('No File Uploaded.')
     # Display the index page without any file content initially
-    return render_template('upload.html')
+    return render_template('upload.html', files=files)
 
 @app.route('/graph')
 def graph_page():
-    graph()
-    return render_template('graph.html')
+    filename = request.args.get('filename')
+    if filename:
+        graph_html = graph(filename)  # Generate the graph HTML
+    else:
+        flash('No file selected.')
+        graph_html = None
 
-
+    return render_template('graph.html', graph_html=graph_html)
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
@@ -54,14 +60,12 @@ def upload_file():
         return redirect(url_for('upload_page'))
 
 
-
-
-
-def graph():
+def graph(filename):
     pd.set_option('display.precision', 18)
 
     # Get the uploaded file dynamically from the filename passed in the URL
-    file_path = os.path.join(app.config['UPLOAD_FOLDER'], 'T0_SHEW.TXT')  # Change this line dynamically using request.args or session
+    file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    file_path = str(file_path)
 
     # Read the file using pandas, adjusting as needed
     data = pd.read_csv(file_path, delim_whitespace=True, skiprows=4)
@@ -69,8 +73,10 @@ def graph():
 
     # Create the graph
     fig = px.line(data, x='Time (sec)', y='Intensity (cps)')
-    fig.show()
+    graph_html = pyo.plot(fig, include_plotlyjs=False, output_type='div')
+
+    return graph_html
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0', port=5001)
