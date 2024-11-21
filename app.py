@@ -9,7 +9,7 @@ import numpy as np
 import os
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static')
 app.config['UPLOAD_FOLDER'] = 'uploads'
 app.secret_key = 'supersecretkey'
 
@@ -24,7 +24,6 @@ def allowed_file(filename):
 @app.route('/')
 def upload_page():
     files = os.listdir(app.config['UPLOAD_FOLDER'])
-    flash('No File Uploaded.')
     # Display the index page without any file content initially
     return render_template('upload.html', files=files)
 
