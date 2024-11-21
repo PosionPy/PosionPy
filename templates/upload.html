@@ -1,40 +1,36 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>Upload a Text File</title>
-</head>
-<body>
-    <h1>Upload a Text File</h1>
+{% extends 'base.html' %}
 
+{% block content %}
+  <div class="content">  <!-- Wrap content inside a content div -->
     {% with messages = get_flashed_messages() %}
       {% if messages %}
         <ul>
-        {% for message in messages %}
-          <li>{{ message }}</li>
-        {% endfor %}
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
         </ul>
       {% endif %}
     {% endwith %}
 
+    <!-- Form to upload a file -->
     <form action="{{ url_for('upload_file') }}" method="post" enctype="multipart/form-data">
-        <input type="file" name="file" accept=".txt">
-        <button type="submit">Upload</button>
+      <div class="mb-3">
+        <label for="formFile" class="form-label">Choose a text file</label>
+        <input class="form-control" type="file" name="file" id="formFile" accept=".txt">
+      </div>
+      <button type="submit" class="btn btn-primary">Upload</button>
     </form>
 
-    <h1>Or choose an uploaded one.</h1>
-
-    <form action="{{ url_for('upload_file') }}" method="post" enctype="multipart/form-data">
-       <ul>
+    <!-- Uploaded file selection -->
+    <div class="container">
+      <h2>Or choose an uploaded one:</h2>
+      <ul class="list-group">
         {% for file in files %}
-        <li>
-            <form action="{{ url_for('upload_file', filename=file) }}" method="get" style="display: inline;">
-                <a href="{{ url_for('graph_page', filename=file) }}">{{ file }}</a>
-            </form>
-        </li>
+          <li class="list-group-item list-group-item-action">
+            <a href="{{ url_for('graph_page', filename=file) }}">{{ file }}</a>
+          </li>
         {% endfor %}
-    </ul>
-    </form>
-
-</body>
-</html>
+      </ul>
+    </div>
+  </div>
+{% endblock %}
