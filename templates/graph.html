@@ -1,19 +1,12 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>Graph</title>
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-</head>
-<body>
-    <h1>Graph</h1>
+{% extends 'base.html' %}
+
+{% block content %}
 
     {% if graph_html %}
-        <div>
+        <div class="container">
             {{ graph_html|safe }}
         </div>
     {% else %}
         <p>No graph to display.</p>
     {% endif %}
-</body>
-</html>
+{% endblock %}
