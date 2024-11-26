@@ -81,3 +81,66 @@ h2 .text-primary {
     color: #006aad;
     font-weight: 700;
 }
+
+/* Navbar gradient */
+.gradient-navbar {
+    background: linear-gradient(to right, #007bff, #80dfff);
+}
+
+/* Navbar brand (Logo or Name) */
+.navbar-brand {
+    font-family: "Roboto", "consolas", sans-serif;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+/* Ensure navbar items are aligned to the right */
+.navbar-nav {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    margin-left: auto;
+    padding-left: 0;
+    justify-content: flex-end;
+    margin-right: 0;
+}
+
+.navbar-nav .nav-item {
+    margin: 0; /* Remove margin */
+    padding: 0; /* Remove padding */
+}
+
+/* Navbar links */
+.nav-link {
+    color: black !important;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-size: 1rem;
+}
+
+/* Navbar hover effect */
+.nav-link:hover {
+    background-color: #006aad;
+    color: #fdc700;
+    border-radius: 5px;
+}
+
+/* Navbar collapse behavior for small screens */
+.navbar-collapse {
+    justify-content: flex-end;
+}
+
+/* Remove the default border of the hamburger icon */
+.navbar-toggler {
+    border: none;
+}
+
+/* Footer gradient */
+.gradient-footer {
+    background: linear-gradient(to right, #007bff, #80dfff);
+}
+
+/* Styling for footer text */
+footer p {
+    font-family: "Roboto", "consolas", sans-serif;
+    color: white;
+}
