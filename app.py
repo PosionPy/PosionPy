@@ -29,9 +29,18 @@ def upload_page():
 
 @app.route('/graph')
 def graph_page():
-    files = os.listdir(app.config['UPLOAD_FOLDER'])  # Get all uploaded files
-    graph_html = graph(files)  # Pass the list of files to the graph function
-    return render_template('graph.html', graph_html=graph_html)  # Render the graph page
+        # Get selected files from the form submission
+        selected_files = request.args.getlist('selected_files')
+
+        # If no files are selected, flash a message and redirect back to the upload page
+        if not selected_files:
+            flash('No files selected. Please select at least one file.')
+            return redirect(url_for('upload_page'))
+
+        # Pass the selected files to the graph function
+        graph_html = graph(selected_files)
+        return render_template('graph.html', graph_html=graph_html)
+
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
