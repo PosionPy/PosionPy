@@ -27,6 +27,11 @@ def upload_page():
     # Display the index page without any file content initially
     return render_template('upload.html', files=files)
 
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+
 @app.route('/graph')
 def graph_page():
         # Get selected files from the form submission
