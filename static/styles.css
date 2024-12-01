@@ -165,45 +165,6 @@ h2 .text-primary {
     }
 }
 
-/* Basic styling for the team-member cards */
-.team-member {
-    background-color: #f4f4f9;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    transition: transform 0.3s ease;
-}
-
-.team-member h3 {
-    color: #007988;
-    font-size: 1.5em;
-    margin-bottom: 15px;
-}
-
-.team-member p {
-    font-size: 1.1em;
-    color: #333;
-}
-
-.team-member a {
-    text-decoration: none;
-    color: #13a5dc;
-}
-
-.team-member a:hover {
-    color: #007988;
-}
-
-/* Fixed 2x2 Grid layout for 4 quadrants */
-.team-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, auto);
-    gap: 20px;
-    margin-top: 30px;
-}
-
 /* Ensuring the grid stays in 2x2 layout even on large screens */
 @media (min-width: 768px) {
     .team-grid {
@@ -223,4 +184,37 @@ h2 .text-primary {
     transform: translateY(-10px);
 }
 
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);  /* Create 4 equal-width columns */
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.team-member {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    text-align: center;
+    background-color: #f9f9f9;
+    transition: background-color 0.3s ease;
+}
+
+.team-member:hover {
+    background-color: #e7f7ff;  /* Light blue hover effect */
+}
+
+.team-member h3 {
+    font-size: 1.5em;
+    color: #007988;
+}
+
+.team-member a {
+    color: #13a5dc;
+    text-decoration: none;
+}
+
+.team-member a:hover {
+    text-decoration: underline;
+}
 

@@ -8,29 +8,14 @@
 
     <!-- Grid container for team members' info -->
     <div class="team-grid">
+        {% for member in team_data %}
         <div class="team-member">
-            <h3>Natalie Oulman</h3>
-            <p><strong>Major:</strong> Computer Science</p>
-            <p><strong>GitHub:</strong> <a href="https://github.com/natalieoulman" target="_blank">GitHub Profile</a></p>
+            <h3>{{ member.name }}</h3>
+            <p><strong>Major:</strong> {{ member.major }}</p>
+            <p><strong>GitHub:</strong> <a href="{{ member.github }}" target="_blank">GitHub Profile</a></p>
+            <p>{{ member.description }}</p>
         </div>
-
-        <div class="team-member">
-            <h3>Jonathan Thang</h3>
-            <p><strong>Major:</strong> Major</p>
-            <p><strong>GitHub:</strong> <a href="https://github.com/" target="_blank">GitHub Profile</a></p>
-        </div>
-
-        <div class="team-member">
-            <h3>Simon Saltikov</h3>
-            <p><strong>Major:</strong> Major</p>
-            <p><strong>GitHub:</strong> <a href="https://github.com/" target="_blank">GitHub Profile</a></p>
-        </div>
-
-        <div class="team-member">
-            <h3>Samuel Hodgdon</h3>
-            <p><strong>Major:</strong>Major</p>
-            <p><strong>GitHub:</strong> <a href="https://github.com/" target="_blank">GitHub Profile</a></p>
-        </div>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}
