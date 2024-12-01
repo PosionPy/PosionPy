@@ -27,9 +27,36 @@ def upload_page():
     # Display the index page without any file content initially
     return render_template('upload.html', files=files)
 
-@app.route('/about')
-def about():
-    return render_template('about.html')
+@app.route('/team')
+def team():
+    team_data = [
+        {
+            "name": "Natalie Oulman",
+            "major": "Computer Science",
+            "github": "https://github.com/natalieoulman",
+            "description": "I'm a passionate developer working on web apps by day and a wannabe bartender by night. I also sneak in as much CK3 time as possible."
+        },
+        {
+            "name": "Jonathan Thang",
+            "major": "Major",
+            "github": "https://github.com/jonathanthang",
+            "description": "Placeholder"
+        },
+        {
+            "name": "Simon Saltikov",
+            "major": "Major",
+            "github": "https://github.com/simonsaltikov",
+            "description": "Placeholder"
+        },
+        {
+            "name": "Samuel Hodgdon",
+            "major": "Major",
+            "github": "https://github.com/samuelhodgdon",
+            "description": "Placeholder"
+        },
+    ]
+    return render_template('team.html', team_data=team_data)
+
 
 
 @app.route('/graph')
