@@ -73,6 +73,13 @@ html, body {
     margin: 0;
 }
 
+.success {
+    color: green;
+}
+.error {
+    color: red;
+}
+
 .container {
     max-width: 900px;
     margin: 20px auto;

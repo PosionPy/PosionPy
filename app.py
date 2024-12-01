@@ -38,8 +38,8 @@ def graph_page():
         selected_files = request.args.getlist('selected_files')
 
         # If no files are selected, flash a message and redirect back to the upload page
-        if not selected_files:
-            flash('No files selected. Please select at least one file.')
+        if request.method == 'GET' and not selected_files:
+            flash('No files selected. Please select at least one file.', 'error')
             return redirect(url_for('upload_page'))
 
         # Pass the selected files to the graph function
@@ -51,12 +51,15 @@ def graph_page():
 def upload_file():
 
     if 'file' not in request.files:
-        flash('No file part')
+        # print("File key missing in request.files")
+        flash('No file part', 'error')
         return redirect(url_for('upload_page'))
 
     file = request.files['file']
+    # print(f"Uploaded filename: {file.filename}")
     if file.filename == '':
-        flash('No selected file')
+        # print("Filename is empty")
+        flash('No selected file.', 'error')
         return redirect(url_for('upload_page'))
 
     if file and allowed_file(file.filename):
@@ -65,9 +68,10 @@ def upload_file():
 
         # Save the file
         file.save(file_path)
-        return redirect(url_for('graph_page'))
+        flash(f'Uploaded {filename} successfully.', 'success')
+        return redirect(url_for('upload_page'))
     else:
-        flash('Please upload a valid .txt file')
+        flash('Please upload a valid .txt file', 'error')
         return redirect(url_for('upload_page'))
 
 
@@ -128,7 +132,7 @@ def graph(files):
 
 
 
-        fig.update_layout(title="Overlay of Graphs",
+        fig.update_layout(title="Overlay of Selected Graphs",
                           xaxis_title="Time (sec)",
                           yaxis_title="Intensity (cps)",
                           showlegend=True)
