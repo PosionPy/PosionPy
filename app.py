@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, redirect, url_for, flash, logging
+from flask import Flask, request, render_template, redirect, url_for, flash
 from werkzeug.utils import secure_filename
 
 import pandas as pd
@@ -74,6 +74,7 @@ def upload_file():
 def graph(files):
     fig = go.Figure()
 
+
     for filename in files:
         file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
 
@@ -103,7 +104,7 @@ def graph(files):
                 y_peak_region = data["Intensity (cps)"][left_idx:right_idx + 1]
 
                 # Calculate the area under the peak using the trapezoidal rule
-                area_under_peak = np.trapz(y_peak_region, x_peak_region)
+                area_under_peak = np.trapezoid(y_peak_region, x_peak_region)
 
                 # Round the time and area to 2 decimal places
                 peak_time = round(data["Time (sec)"][peak], 2)
@@ -127,7 +128,7 @@ def graph(files):
 
 
 
-        fig.update_layout(title="Overlay of Multiple Graphs with Peaks",
+        fig.update_layout(title="Overlay of Graphs",
                           xaxis_title="Time (sec)",
                           yaxis_title="Intensity (cps)",
                           showlegend=True)
