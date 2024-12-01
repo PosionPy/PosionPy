@@ -62,6 +62,15 @@ button[type="submit"]:hover {
 body {
     font-family: "Roboto", "consolas", sans-serif;
     font-size: 16px;
+    display: flex;
+    flex-direction: column;
+    background-color: #f0f7ff;
+    color: #333;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
 }
 
 .container {
@@ -70,6 +79,7 @@ body {
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    flex: 1;
 }
 
 h2 {
@@ -84,7 +94,7 @@ h2 .text-primary {
 
 /* Navbar gradient */
 .gradient-navbar {
-    background: linear-gradient(to right, #007bff, #80dfff);
+    background: linear-gradient(to right, #003c6c, #006aad);
 }
 
 /* Navbar brand (Logo or Name) */
@@ -92,6 +102,7 @@ h2 .text-primary {
     font-family: "Roboto", "consolas", sans-serif;
     font-weight: 700;
     letter-spacing: 1px;
+    color: #fdc700;
 }
 
 /* Ensure navbar items are aligned to the right */
@@ -104,26 +115,19 @@ h2 .text-primary {
     justify-content: flex-end;
     margin-right: 0;
 }
-
-.navbar-nav .nav-item {
-    margin: 0; /* Remove margin */
-    padding: 0; /* Remove padding */
-}
-
 /* Navbar links */
 .nav-link {
-    color: black !important;
+    color: white !important;
     transition: background-color 0.3s ease, color 0.3s ease;
     font-size: 1rem;
+    padding: 14px 20px;
+    display: inline-block;
 }
-
-/* Navbar hover effect */
 .nav-link:hover {
-    background-color: #006aad;
     color: #fdc700;
     border-radius: 5px;
+    text-decoration: underline;
 }
-
 /* Navbar collapse behavior for small screens */
 .navbar-collapse {
     justify-content: flex-end;
@@ -136,11 +140,21 @@ h2 .text-primary {
 
 /* Footer gradient */
 .gradient-footer {
-    background: linear-gradient(to right, #007bff, #80dfff);
+    background: linear-gradient(to right, #003c6c, #006aad);
+    padding: 20px;
+    text-align: center;
 }
 
-/* Styling for footer text */
-footer p {
+.gradient-footer p {
     font-family: "Roboto", "consolas", sans-serif;
-    color: white;
+    color: #fdc700 !important;
 }
+
+
+@media (max-width: 991px) {
+    .navbar-nav {
+        flex-direction: column;
+        width: 100%;
+    }
+}
+

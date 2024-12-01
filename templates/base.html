@@ -14,26 +14,19 @@
 <body>
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg gradient-navbar">
-    <div class="container"> <!-- Add container class here -->
-        <a class="navbar-brand text-white" href="#">PoisonPy</a>
+    <div class="container">
+        <a class="navbar-brand" href="/">PoisonPy</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
+            <div class="navbar-nav">
                     <a class="nav-link text-white" href="/">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="/upload">About</a>
-                </li>
-            </ul>
+                    <a class="nav-link text-white" href="/about">About</a>
+            </div>
         </div>
     </div>
 </nav>
-
-
-
     <!-- Main content -->
     <div class="container my-4">
         {% block content %}{% endblock %}
@@ -41,7 +34,7 @@
 
     <!-- Footer -->
     <footer class="gradient-footer text-center py-3">
-        <p class="text-white">© 2024 PoisonPy | All Rights Reserved</p>
+        <p>© 2024 PoisonPy | All Rights Reserved</p>
     </footer>
 
     <!-- Bootstrap JavaScript Bundle -->

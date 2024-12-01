@@ -27,12 +27,7 @@
         <form action="{{ url_for('graph_page') }}" method="get">
             {% for file in files %}
             <div class="form-check">
-                <input
-                    class="form-check-input"
-                    type="checkbox"
-                    name="selected_files"
-                    value="{{ file }}"
-                    id="fileCheckbox{{ loop.index }}">
+                <input class="form-check-input" type="checkbox" name="selected_files" value="{{ file }}" id="fileCheckbox{{ loop.index }}">
                 <label class="form-check-label" for="fileCheckbox{{ loop.index }}">
                     {{ file }}
                 </label>
@@ -43,4 +38,3 @@
     </div>
 </div>
 {% endblock %}
-
