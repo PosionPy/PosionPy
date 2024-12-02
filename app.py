@@ -105,10 +105,8 @@ def upload_file():
 def graph(files):
     fig = go.Figure()
 
-
     for filename in files:
         file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-
         file_path = str(file_path)
 
         # Check if file exists
@@ -120,12 +118,10 @@ def graph(files):
 
         peaks, _ = find_peaks(data["Intensity (cps)"], height=200000, distance=50)
 
-        fig.add_trace(go.Scatter(x=data["Time (sec)"], y=data["Intensity (cps)"],
-                                 mode='lines', name=filename))
+        areas = []
         for peak in peaks:
             # Only annotate peaks with intensity > 100 (and avoid peak at 0 or very close to 0)
             if data["Intensity (cps)"][peak] > 100 and data["Time (sec)"][peak] > 0.1:  # Avoid near-zero times
-
                 # Identify the region around the peak for integration
                 left_idx = peak - 10 if peak - 10 >= 0 else 0  # 10 data points before peak
                 right_idx = peak + 10 if peak + 10 < len(data) else len(data) - 1  # 10 data points after peak
@@ -136,38 +132,60 @@ def graph(files):
 
                 # Calculate the area under the peak using the trapezoidal rule
                 area_under_peak = np.trapezoid(y_peak_region, x_peak_region)
+                areas.append((filename,f"{area_under_peak:.2f}"))
+            else:
+                areas.append((filename, "none"))
 
-                # Round the time and area to 2 decimal places
-                peak_time = round(data["Time (sec)"][peak], 2)
+        area = "none"
+        for area_tuple in areas:
+            key, value = area_tuple
+            if key == filename:
+                area = value
+                break
 
-                # Use scientific notation for intensity and area if they exceed a threshold (e.g., 1e6)
-                peak_intensity = data["Intensity (cps)"][peak]
-                formatted_area = f"{ area_under_peak:.2e}" if  area_under_peak > 100000 else round(
-                    area_under_peak, 2)
+        # Add the trace for the line
+        fig.add_trace(go.Scatter(
+            x=data["Time (sec)"],
+            y=data["Intensity (cps)"],
+            mode='lines',
+            name=filename.split('.')[0],
+            hovertemplate='<b>Time</b>: %{x}<br>' +
+                          '<b>Intensity</b>: %{y}<br>' +
+                          '<b>Area</b>: ' + area,
+        ))
 
-                # Format the annotation text
-                text = f'Area: {formatted_area}'
+        fig.update_layout(
+            hovermode='closest',
+            title="Overlay of Selected Graphs",
+            xaxis_title="Time (sec)",
+            yaxis_title="Intensity (cps)",
+            showlegend=True,
+            legend=dict(
+                orientation='h',
+                x=0.5,
+                xanchor='center',
+                y=-0.35,
+                yanchor='bottom',
+                font=dict(
+                    size=13
+                ),
+                traceorder='normal',
+            ),
+            title_font_size=22,
+            margin=dict(l=20, r=20, t=50, b=20),
+            xaxis=dict(
+                tickfont=dict(size=12),
+                range=[0, 280]
+            ),
+            yaxis=dict(tickfont=dict(size=12)),
+        )
 
 
-                fig.add_annotation(
-                    x=peak_time,
-                    y=peak_intensity,
-                    text=text,
-                    showarrow=True,
-                    arrowhead=2
-                )
-
-
-
-        fig.update_layout(title="Overlay of Selected Graphs",
-                          xaxis_title="Time (sec)",
-                          yaxis_title="Intensity (cps)",
-                          showlegend=True)
-
-    # Generate HTML for the plot
     graph_html = pyo.plot(fig, include_plotlyjs=False, output_type='div')
 
     return graph_html
+
+
 
 
 if __name__ == '__main__':
