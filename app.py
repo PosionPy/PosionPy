@@ -167,36 +167,41 @@ def graph(files):
         for peak in peaks:
             # Only annotate peaks with intensity > 100 (and avoid peak at 0 or very close to 0)
             if data["Intensity (cps)"][peak] > 100 and data["Time (sec)"][peak] > 0.1:  # Avoid near-zero times
-                # Identify the region around the peak for integration
-                left_idx = peak - 10 if peak - 10 >= 0 else 0  # 10 data points before peak
-                right_idx = peak + 10 if peak + 10 < len(data) else len(data) - 1  # 10 data points after peak
 
-                # Slice the data to the region around the peak
-                x_peak_region = data["Time (sec)"][left_idx:right_idx + 1]
-                y_peak_region = data["Intensity (cps)"][left_idx:right_idx + 1]
+               left_idx = peak
+               right_idx = peak
 
-                # Calculate the area under the peak using the trapezoidal rule
-                area_under_peak = np.trapezoid(y_peak_region, x_peak_region)
-                areas.append((filename,f"{area_under_peak:.2f}"))
+               threshold_intensity = data["Intensity (cps)"][peak] * 0.03
+               print(threshold_intensity)
+               while left_idx >= 0 and data["Intensity (cps)"][left_idx - 1] > threshold_intensity:
+                   left_idx -= 4
+               while right_idx < len(data) - 1 and data["Intensity (cps)"][right_idx + 1] > threshold_intensity:
+                   right_idx += 4
+
+               x_peak_region = data["Time (sec)"][left_idx:right_idx + 1]
+               y_peak_region = data["Intensity (cps)"][left_idx:right_idx + 1]
+
+               area_under_peak = np.trapezoid(y_peak_region, x_peak_region)
+               areas.append((filename, f"{area_under_peak:.2e}"))
+
             else:
                 areas.append((filename, "none"))
 
-        area = "none"
+        areas_for_file = []
         for area_tuple in areas:
             key, value = area_tuple
             if key == filename:
-                area = value
-                break
+                areas_for_file.append(value)
+
 
         # Add the trace for the line
         fig.add_trace(go.Scatter(
             x=data["Time (sec)"],
             y=data["Intensity (cps)"],
-            mode='lines',
             name=filename.split('.')[0],
             hovertemplate='<b>Time</b>: %{x}<br>' +
                           '<b>Intensity</b>: %{y}<br>' +
-                          '<b>Area</b>: ' + area,
+                          '<b>Area</b>: ' + ", ".join(areas_for_file),
         ))
 
         fig.update_layout(
