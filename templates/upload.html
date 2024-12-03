@@ -24,7 +24,7 @@
     <!-- Form to select uploaded files -->
     <div class="container mt-4">
         <h2>Select files to graph:</h2>
-        <form action="{{ url_for('graph_page') }}" method="get">
+        <form action="{{ url_for('handle_files') }}" method="post">
             {% for file in files %}
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" name="selected_files" value="{{ file }}" id="fileCheckbox{{ loop.index }}">
@@ -33,7 +33,11 @@
                 </label>
             </div>
             {% endfor %}
-            <button type="submit" class="btn btn-primary mt-3">Graph Selected Files</button>
+            <button type="submit" name="action" value="graph" class="btn btn-primary mt-3">Graph Selected Files</button>
+
+            <button type="submit" name="action" value="download" class="btn btn-primary mt-3">Download Selected Files</button>
+
+            <button type="submit" name="action" value="delete" class="btn btn-primary mt-3">Delete Selected Files</button>
         </form>
     </div>
 </div>

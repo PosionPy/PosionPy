@@ -1,4 +1,7 @@
-from flask import Flask, request, render_template, redirect, url_for, flash
+import io
+import zipfile
+
+from flask import Flask, request, render_template, redirect, url_for, flash, send_file
 from werkzeug.utils import secure_filename
 
 import pandas as pd
@@ -58,6 +61,48 @@ def team():
     return render_template('team.html', team_data=team_data)
 
 
+# def delete_files():
+#
+# def download_files():
+@app.route('/handle_files', methods=['POST'])
+def handle_files():
+    selected_files = request.form.getlist('selected_files')
+    action = request.form.get('action')
+
+    if not selected_files:
+        flash('No files selected.', 'error')
+        return redirect(url_for('upload_page'))
+
+    # Handle file deleting
+    if action == 'delete':
+        for filename in selected_files:
+            file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            if os.path.exists(file_path):
+                os.remove(file_path)
+        flash(f"{len(selected_files)} files deleted.", "success")
+
+    # Handle file graphing
+    elif action == 'graph':
+        return redirect(url_for('graph_page', selected_files=selected_files))
+
+    # Handle file download
+    elif action == 'download':
+        zip_buffer = io.BytesIO()
+        with zipfile.ZipFile(zip_buffer, 'w', zipfile.ZIP_DEFLATED) as zip_file:
+            for file in selected_files:
+                file_path = os.path.join(app.config['UPLOAD_FOLDER'], file)
+                if os.path.exists(file_path):
+                    zip_file.write(file_path, arcname=file)
+                else:
+                    flash(f'File {file} does not exist and was not added to the zip.', 'error')
+        zip_buffer.seek(0)
+        return send_file(zip_buffer, as_attachment=True, download_name='selected_files.zip', mimetype='application/zip')
+
+    else:
+        flash("Invalid action.", "error")
+
+    # Redirect back to the upload page after processing
+    return redirect(url_for('upload_page'))
 
 @app.route('/graph')
 def graph_page():
