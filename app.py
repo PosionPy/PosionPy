@@ -47,9 +47,9 @@ def team():
         },
         {
             "name": "Simon Saltikov",
-            "major": "Major",
+            "major": "Computer Science",
             "github": "https://github.com/simonsaltikov",
-            "description": "Placeholder"
+            "description": "I am an upper division college student aspiring to learn more about the computer science field by applying my skills in a real world environment."
         },
         {
             "name": "Samuel Hodgdon",
