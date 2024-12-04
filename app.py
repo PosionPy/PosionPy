@@ -41,9 +41,9 @@ def team():
         },
         {
             "name": "Jonathan Thang",
-            "major": "Major",
-            "github": "https://github.com/jonathanthang",
-            "description": "Placeholder"
+            "major": "Computer Science",
+            "github": "https://github.com/Yellow13580",
+            "description": "Programming is fun until there is a bug on line 40 in a program with 20 lines of code."
         },
         {
             "name": "Simon Saltikov",
