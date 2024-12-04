@@ -53,9 +53,9 @@ def team():
         },
         {
             "name": "Samuel Hodgdon",
-            "major": "Major",
-            "github": "https://github.com/samuelhodgdon",
-            "description": "Placeholder"
+            "major": "Computer Science",
+            "github": "https://github.com/samh120",
+            "description": "I am a third year computer science student with interests in security and networking"
         },
     ]
     return render_template('team.html', team_data=team_data)
